@@ -1,0 +1,118 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtid"
+        android:layout_alignBottom="@+id/txtid"
+        android:layout_alignLeft="@+id/lblnombre"
+        android:text="ID" />
+
+    <TextView
+        android:id="@+id/lblnombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtnombre"
+        android:layout_alignBottom="@+id/txtnombre"
+        android:text="@string/nom" />
+
+    <EditText
+        android:id="@+id/txtdni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtnombre"
+        android:layout_below="@+id/txtnombre"
+        android:layout_marginTop="15dp"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/lbldni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtdni"
+        android:layout_alignBottom="@+id/txtdni"
+        android:layout_alignLeft="@+id/lblnombre"
+        android:text="@string/dni" />
+
+    <EditText
+        android:id="@+id/txtid"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtnombre"
+        android:layout_alignParentTop="true"
+        android:ems="10" />
+
+    <Button
+        android:id="@+id/btnmostrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnguardar"
+        android:layout_centerHorizontal="true"
+        android:text="Mostrar" />
+
+    <Button
+        android:id="@+id/btnmodificar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btneliminar"
+        android:layout_below="@+id/btnmostrar"
+        android:text="Cambiar" />
+
+    <Button
+        android:id="@+id/btnbuscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnguardar"
+        android:layout_below="@+id/btnmostrar"
+        android:layout_toLeftOf="@+id/btnmostrar"
+        android:text="Buscar" />
+
+    <EditText
+        android:id="@+id/txtnombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtid"
+        android:layout_marginTop="20dp"
+        android:ems="10" />
+
+    <Button
+        android:id="@+id/btnguardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtdni"
+        android:layout_marginTop="34dp"
+        android:layout_toLeftOf="@+id/btnmostrar"
+        android:text="Agregar" />
+
+    <Button
+        android:id="@+id/btneliminar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnguardar"
+        android:layout_alignBottom="@+id/btnguardar"
+        android:layout_toRightOf="@+id/btnmostrar"
+        android:text="Eliminar" />
+
+    <Button
+        android:id="@+id/btnlimpiar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtid"
+        android:layout_alignBottom="@+id/txtid"
+        android:layout_alignRight="@+id/btnmodificar"
+        android:text="Limpiar" />
+
+</RelativeLayout>
