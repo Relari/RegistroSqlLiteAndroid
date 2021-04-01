@@ -8,16 +8,11 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
 public class MainActivity2 extends Activity {
 
-	private BDAyuda manager;
-
 	private ListView lista;
-	SimpleCursorAdapter adapter;
 
 	List<String> item = null;
 
@@ -32,9 +27,9 @@ public class MainActivity2 extends Activity {
 	}
 
 	public void mostrarCon() {
-		manager = new BDAyuda(this);
-		manager.abrir();
-		Cursor c = manager.consultarD();
+		PersonDao personDao = new PersonDaoImpl(this);
+		personDao.open();
+		Cursor c = personDao.findAll();
 		item = new ArrayList<String>();
 		String id="", nombre = "", dni = "";
 		if (c.moveToFirst()) {

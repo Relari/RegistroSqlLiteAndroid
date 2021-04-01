@@ -1,7 +1,5 @@
 package com.example.eje;
 
-import com.example.eje.R;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -10,7 +8,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener {
@@ -18,7 +15,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	EditText txtnombre, txtdni, txtid;
 	Button btnguardar, btnmostrar, btneliminar, btnmodificar, btnbuscar, btnlimpiar;
 
-	Persona per = new Persona();
+	PersonDao personDao = new PersonDaoImpl(this);
 
 	public void Limpiar() {
 		txtid.setText(null);
@@ -68,50 +65,55 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.btnguardar:
 			try {
-				BDAyuda bda = new BDAyuda(this);
-				bda.abrir();
 				
-				per.setNombre(txtnombre.getText().toString());
-				per.setDNI(txtdni.getText().toString());
+				personDao.open();
+				
+				Person person = new Person();
+				person.setName(txtnombre.getText().toString());
+				person.setDocumentNumber(txtdni.getText().toString());
 
-				long result = bda.registrar(per);
+				long result = personDao.insertPerson(person);
 
-				bda.cerrar();
 				if (result > 0) {
 					Toast t = Toast.makeText(this, "valor insertado",
 							Toast.LENGTH_LONG);
 					t.show();
-					Limpiar();
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				Toast t = Toast.makeText(this, e.toString(), Toast.LENGTH_LONG);
 				t.show();
+			} finally {
+				personDao.close();
+				Limpiar();
 			}
 			break;
 		case R.id.btnmodificar:
 			try {
-				BDAyuda bda = new BDAyuda(this);
-				bda.abrir();
+				personDao.open();
 
-				per.setId_registro(Integer.parseInt(txtid.getText().toString()));
-				per.setNombre(txtnombre.getText().toString());
-				per.setDNI(txtdni.getText().toString());
+				Person person = new Person();
+				person.setId(Integer.parseInt(txtid.getText().toString()));
+				person.setName(txtnombre.getText().toString());
+				person.setDocumentNumber(txtdni.getText().toString());
 				
-				long result = bda.modificar(per);
+				long result = personDao.updatePerson(person);
 
-				bda.cerrar();
 				if (result > 0) {
 					Toast t = Toast.makeText(this, "valor modificado",
 							Toast.LENGTH_LONG);
 					t.show();
-					Limpiar();
+					
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				Toast t = Toast.makeText(this, e.toString(), Toast.LENGTH_LONG);
 				t.show();
+			} finally {
+				personDao.close();
+				Limpiar();
 			}
+			
 			break;
 		case R.id.btnmostrar:
 			Intent sgte = new Intent(MainActivity.this, MainActivity2.class);
@@ -119,35 +121,42 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.btneliminar:
 			try {
-				BDAyuda bda = new BDAyuda(this);
-				bda.abrir();
+				personDao.open();
 				
-				per.setId_registro(Integer.parseInt(txtid.getText().toString()));
-				
-				bda.eliminar(per);
-				bda.cerrar();
+				int id = Integer.parseInt(txtid.getText().toString());
+				personDao.deleteById(id);
 
 				Toast t = Toast.makeText(this, "valor eliminado", Toast.LENGTH_LONG);
 				t.show();
-				Limpiar();
 
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				Toast t = Toast.makeText(this, e.toString(), Toast.LENGTH_LONG);
 				t.show();
+			} finally {
+				personDao.close();
+				Limpiar();
 			}
 			break;
 		case R.id.btnbuscar:
-			BDAyuda bda = new BDAyuda(this);
-			bda.abrir();
 			
-			per.setNombre(txtnombre.getText().toString());
+			try {
+				personDao.open();
+				
+				String name = txtnombre.getText().toString();
+				String[] datos = personDao.findByName(name);
+				txtid.setText(datos[0]);
+				txtnombre.setText(datos[1]);
+				txtdni.setText(datos[2]);
+				
+			} catch (Exception e) {
+				Toast t = Toast.makeText(this, e.toString(), Toast.LENGTH_LONG);
+				t.show();
+			} finally {
+				personDao.close();
+				Limpiar();
+			}
 			
-			String[] datos = bda.buscador(per);
-			txtid.setText(datos[0]);
-			txtnombre.setText(datos[1]);
-			txtdni.setText(datos[2]);
-			bda.cerrar();
 			break;
 		}
 	}
